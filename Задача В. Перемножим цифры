@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;  // Читаем количество тестов
+    
+    while (t--) {
+        int n;
+        cin >> n;  // Читаем число для каждого теста
+        
+        // ОСОБЫЕ СЛУЧАИ
+        if (n == 0) {
+            cout << 10 << endl;  // 1 * 0 = 0, минимальное число 10
+            continue;
+        }
+        
+        if (n == 1) {
+            cout << 1 << endl;   // Произведение цифр числа 1 = 1
+            continue;
+        }
+        
+        vector<int> digits;  // Вектор для хранения цифр ответа
+        
+        // РАЗЛОЖЕНИЕ НА МНОЖИТЕЛИ
+        // Идем от 9 до 2 (в порядке убывания)
+        for (int i = 9; i >= 2; i--) {
+            // Пока n делится на i
+            while (n % i == 0) {
+                digits.push_back(i);  // Добавляем цифру
+                n /= i;               // Делим n
+            }
+        }
+        
+        // ПРОВЕРКА: если остался простой множитель > 9
+        if (n > 1) {
+            cout << -1 << endl;  // Нельзя представить в виде цифр
+            continue;
+        }
+        
+        // СОРТИРОВКА для получения минимального числа
+        sort(digits.begin(), digits.end());
+        
+        // ВЫВОД ОТВЕТА
+        for (int i = 0; i < digits.size(); i++) {
+            cout << digits[i];
+        }
+        cout << endl;
+    }
+    
+    return 0;
+}
